@@ -34,4 +34,8 @@ class Controller_main extends Controller {
     function action_addPerson() {
         $this->view->generate('addPerson.php', 'template.php');
     }
+
+    function action_paySalary() {
+        $data = $this->model->paySalary();
+    }
 }

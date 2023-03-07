@@ -5,7 +5,7 @@
             <?php foreach($data['person'] as $obj)
             {
             ?>
-            <form action="/action_update.php" method="POST">
+            <form action="/main/paySalary" method="POST">
                 <input type="hidden" class="form-control" id="Id" name="Id" value="<?php echo($obj['Id'])?>" placeholder="name@example.com">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Имя</label>
