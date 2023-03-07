@@ -67,7 +67,7 @@
         ?>
         </div>
         <div class="col-8">
-            <h2 class="badge badge-danger" style="font-size: 36px">!Внимание!</h2>
+            <h2 class="" style="font-size: 36px">!Внимание!</h2>
             <p>Нажимайте на кнопку "Зачислить зарплату" только в начале месяца и один раз!!!. </p>
         </div>
     </div>
