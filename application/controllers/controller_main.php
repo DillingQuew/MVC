@@ -18,5 +18,20 @@ class Controller_main extends Controller {
         $this->view->generate('NDFL.php', 'template.php', $data);
     }
 
+    function action_person() {
+        $data = $this->model->getCurrentPerson();
+        $this->view->generate('person.php', 'template.php', $data);
+    }
 
+    function action_delete() {
+        $this->model->deleteCurrentPerson();
+    }
+
+    function action_create() {
+        $this->model->createPerson();
+    }
+
+    function action_addPerson() {
+        $this->view->generate('addPerson.php', 'template.php');
+    }
 }
