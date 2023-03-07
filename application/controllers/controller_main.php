@@ -1,11 +1,22 @@
 <?php
+class Controller_main extends Controller {
 
-class controller_main extends Controller {
-    function action_index()
+    function __construct()
     {
-        $this->view->generate('main.php', 'template.php');
+        $this->model = new Model_Main();
+        $this->view = new View();
     }
 
+    function action_index()
+    {
+        $data = $this->model->getAllPersons();
+        $this->view->generate('main.php', 'template.php', $data);
+    }
+
+    function action_NDFL() {
+        $data = $this->model->getNDFLReport();
+        $this->view->generate('NDFL.php', 'template.php', $data);
+    }
 
 
 }
