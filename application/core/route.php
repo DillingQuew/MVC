@@ -10,13 +10,11 @@ class Route
 //        $routes = explode('/', $_SERVER['REQUEST_URI']);
         $URIParts = explode('?',$_SERVER['REQUEST_URI']); //переписанный роут для get запросов
         $routes = explode('/',$URIParts[0]);
-
         // получаем имя контроллера
         if ( !empty($routes[1]) )
         {
             $controller_name = $routes[1];
         }
-
         // получаем имя экшена
         if ( !empty($routes[2]) )
         {
@@ -74,4 +72,5 @@ class Route
     {
        include 'views/layouts/'.$error_page;  die;
     }
+
 }
