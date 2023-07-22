@@ -1,80 +1,39 @@
 <?php
 include ('application/DB/DataBase.php');
+include ('application/DB/Product.php');
+
 use core\model;
-use DB\DataBase\DataBase;
+use DB\DataBase\Product;
+use DB\DataBase\MyPDO;
 
 
 class Model_Main extends Model
 {
-
-    public function getAllPersons() {
-        return DataBase::DB()->query('SELECT * FROM Persons');
+    protected $db;
+    public function __construct(MyPDO $db)
+    {
+        $this->db = $db;
     }
 
-    public function getNDFLReport() {
-        $dateStart = $_GET['year'] . "-01-01 00:00:00";
-        $dateEnd = $_GET['year'] . "-12-31 11:59:59";
-        $id = $_GET['Id'];
-        $stmt = DataBase::DB()->prepare('SELECT * FROM log WHERE (time BETWEEN :dateStart AND :dateEnd) AND row_id = :Id ORDER BY time');
-        $stmt->bindParam(':dateStart', $dateStart);
-        $stmt->bindParam(':dateEnd', $dateEnd);
-        $stmt->bindParam(':Id', $id);
-        $stmt->execute();
-        $sum = DataBase::DB()->prepare('SELECT row_id, SUM(Salary)  AS person_sum FROM `log` WHERE (time BETWEEN :dateStart AND :dateEnd) AND row_id = :Id GROUP BY row_id');
-        $sum->bindParam(':dateStart', $dateStart);
-        $sum->bindParam(':dateEnd', $dateEnd);
-        $sum->bindParam(':Id', $id);
-        $sum->execute();
-        $data['list'] = $stmt;
-        $data['sum'] = $sum;
-        return $data;
+    public function getAll($withDeleted = false) {
+
+        $product = new Product($this->db);
+        return $product->getAll($withDeleted);
     }
-
-    public function getCurrentPerson() {
-
-        $stmt = DataBase::DB()->prepare('SELECT * FROM log WHERE row_id = :Id ORDER BY time');
-        $stmt->execute(array('Id' => $_GET['Id']));
-        $person = DataBase::DB()->prepare('SELECT * FROM Persons WHERE id = :Id ');
-        $person->execute(array('Id' => $_GET['Id']));
-
-        $data['list'] = $stmt;
-        $data['person'] = $person;
-        return $data;
+    public function create($data) {
+        $product = new Product($this->db);
+        return $product->create($data);
     }
-
-    public function deleteCurrentPerson() {
-        $person = DataBase::DB()->prepare('DELETE FROM Persons WHERE Id = :Id');
-        $person->execute(array(
-            'Id' => $_POST['Id']
-        ));
-        header("Location: /");
-        die();
+    public function update($id, $data) {
+        $product = new Product($this->db);
+        return $product->update($id, $data);
     }
-
-    public function createPerson() {
-        $person = DataBase::DB()->prepare('INSERT INTO Persons (FirstName, LastName, Job, Salary) 
-                               VALUES (:FirstName, :LastName, :Job, :Salary)');
-        $person->execute(array(
-            'FirstName' => $_POST['FirstName'],
-            'LastName'=>$_POST['LastName'],
-            'Job'=>$_POST['Job'],
-            'Salary'=>$_POST['Salary'],
-        ));
-        header("Location: /");
-        die();
+    public function findById($id) {
+        $product = new Product($this->db);
+        return $product->findById($id);
     }
-
-    public function paySalary() {
-        $person = DataBase::DB()->prepare('UPDATE Persons SET FirstName = :FirstName, 
-               LastName = :LastName, Job = :Job, Salary = :Salary WHERE id = :Id');
-        $person->execute(array(
-            'Id' => $_POST['Id'],
-            'FirstName' => $_POST['FirstName'],
-            'LastName'=>$_POST['LastName'],
-            'Job'=>$_POST['Job'],
-            'Salary'=>$_POST['Salary'],
-        ));
-        header("Location: /");
-        die();
+    public function delete($id) {
+        $product = new Product($this->db);
+        return $product->softDelete($id);
     }
 }

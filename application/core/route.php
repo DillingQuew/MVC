@@ -1,4 +1,6 @@
 <?php
+
+
 class Route
 {
     static function start()
@@ -10,6 +12,7 @@ class Route
 //        $routes = explode('/', $_SERVER['REQUEST_URI']);
         $URIParts = explode('?',$_SERVER['REQUEST_URI']); //переписанный роут для get запросов
         $routes = explode('/',$URIParts[0]);
+
         // получаем имя контроллера
         if ( !empty($routes[1]) )
         {
