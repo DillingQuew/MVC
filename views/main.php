@@ -2,27 +2,55 @@
     <label for="withDeleted">С удаленными</label>
     <input id="toggle-one" <?php echo (isset($_GET['withDeleted'])) ? "checked" : ""; ?> name="withDeleted" type="checkbox">
 </form>
+<form name="onlyDeleted" action="/" method="GET">
+    <label for="onlyDeleted">Только удаленные</label>
+    <input id="toggle-two" <?php echo (isset($_GET['withDeleted'])) ? "checked" : ""; ?> name="onlyDeleted" type="checkbox">
+</form>
+<div class="input-group rounded">
+    <input name="search" type="search" class="form-control rounded" placeholder="Поиск по товарам" aria-label="Search" aria-describedby="search-addon" />
+</div>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">ID</th>
         <th scope="col">ID категории</th>
-        <th scope="col">Заголовок</th>
+        <th scope="col">Заголовок
+            <div>
+                <a class="title-asc" href="">по возрастанию</a> <br>
+                <a class="title-desc" href="">по убыванию</a>
+            </div>
+        </th>
         <th scope="col">Цена
         <div>
-         по возрастанию
+            <a class="price-asc" href="">по возрастанию</a> <br>
+            <a class="price-desc" href="">по убыванию</a>
         </div>
         </th>
         <th scope="col">Описание</th>
         <th scope="col">Сортировка</th>
-        <th scope="col">Создано</th>
-        <th scope="col">Обновлено</th>
-        <th scope="col">Удалено</th>
+        <th scope="col">Создано
+            <div>
+                <a class="create-asc" href="">по возрастанию</a> <br>
+                <a class="create-desc" href="">по убыванию</a>
+            </div>
+        </th>
+        <th scope="col">Обновлено
+            <div>
+                <a class="update-asc" href="">по возрастанию</a> <br>
+                <a class="update-desc" href="">по убыванию</a>
+            </div>
+        </th>
+        <th scope="col">Удалено
+            <div>
+                <a class="delete-asc" href="">по возрастанию</a> <br>
+                <a class="delete-desc" href="">по убыванию</a>
+            </div>
+        </th>
         <th scope="col">Обновить</th>
         <th scope="col">Удалить</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="products-list">
 
     <?php foreach ($data as $obj) { ?>
         <tr>
